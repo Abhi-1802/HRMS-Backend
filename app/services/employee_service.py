@@ -23,11 +23,14 @@ def create_employee(db: Session, data: EmployeeCreate):
 def get_employees(db: Session):
     return db.query(Employee).all()
 
-
 def delete_employee(db: Session, emp_id: int):
-    emp = db.query(Employee).get(emp_id)
+    # Use Session.get() to fetch by primary key
+    emp = db.get(Employee, emp_id)
+    
     if not emp:
-        raise HTTPException(404, "Employee not found")
-
+        raise HTTPException(status_code=404, detail="Employee not found")
+    
     db.delete(emp)
     db.commit()
+    
+    return {"message": f"Employee with id {emp_id} deleted successfully"}
