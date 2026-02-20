@@ -25,15 +25,22 @@ Backend:
 
 Frontend:
 - React
+- Tailwind CSS
 
 Deployment:
 - Backend: Render
 - Database: MySQL
 
 ## ⚙️ Run Locally
+First create and activate venv
+
+### Frontend
+npm install
+npm run dev
 
 ### Backend
 
 ```bash
 pip install -r requirements.txt
 uvicorn app.main:app --reload
+
