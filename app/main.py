@@ -9,9 +9,6 @@ from app.db.session import engine
 
 app = FastAPI(title="HRMS Lite API")
 
-# Create tables ONLY in local/dev
-if os.getenv("ENV") != "production":
-    Base.metadata.create_all(bind=engine)
 
 origins = [
     "http://localhost:3000",
