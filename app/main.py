@@ -1,14 +1,14 @@
+# main.py
+
 import os
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-
 from app.api.v1.router import api_router
 from app.core.exceptions import http_exception_handler
 from app.db.base import Base
 from app.db.session import engine
 
 app = FastAPI(title="HRMS Lite API")
-
 
 origins = [
     "http://localhost:3000",
@@ -31,3 +31,12 @@ app.include_router(api_router, prefix="/api/v1")
 @app.get("/")
 def root():
     return {"message": "HRMS Lite Backend Running"}
+
+# Create tables
+Base.metadata.create_all(bind=engine)
+
+# Start server with dynamic port
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=False)
